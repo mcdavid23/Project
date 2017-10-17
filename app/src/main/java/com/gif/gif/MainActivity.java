@@ -1,10 +1,15 @@
 package com.gif.gif;
+import android.view.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -12,6 +17,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.v("gif", "onCreate triggered");
     }
+
+
+    public void onButtonClick(View v)
+    {
+        if(v.getId() == R.id.CREATE)
+        {
+            Intent i = new Intent(MainActivity.this,create.class);
+            startActivity(i);
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
 
     protected void onStart() {
         super.onStart();
