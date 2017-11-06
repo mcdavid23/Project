@@ -2,10 +2,14 @@ package com.gif.gif;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +30,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private Bitmap yourbitmap;
     private Bitmap resized;
     private final int PICK_IMAGE_MULTIPLE =1;
+    private ShakeSensor mShakeSensor;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,20 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnSaveImages = (Button)findViewById(R.id.btnSaveImages);
         btnAddPhots.setOnClickListener(this);
         btnSaveImages.setOnClickListener(this);
+
+        // ShakeSensor initialization
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeSensor = new ShakeSensor(new ShakeSensor.OnShakeListener() {
+            @Override
+            public void onShake() {
+                // SHARE
+               // Toast toast = Toast.makeText(getApplicationContext(), "Shake n Bake.", Toast.LENGTH_SHORT);
+               //toast.show();
+                finish();
+            }
+        });
+            Log.v("gif", "onCreate triggered");
     }
 
 
@@ -101,5 +122,37 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.v("gif", "onStart triggered");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mSensorManager.registerListener(mShakeSensor, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+        Log.v("gif", "onResume triggered");
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mSensorManager.unregisterListener(mShakeSensor);
+        Log.v("gif", "onPause triggered");
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.v("gif", "onStop triggered");
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.v("gif", "onDestory triggered");
+    }
 
 }
+
