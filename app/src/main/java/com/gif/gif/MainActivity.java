@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 
+    ArrayList<Bitmap> list = new ArrayList<Bitmap>();
     private Button btnShare;
     private Intent shareIntent;
     String shareBody = "Check out this APP!";
@@ -33,7 +38,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private ShakeSensor mShakeSensor;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
-
+    private FileOutputStream outStream = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +73,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         mShakeSensor = new ShakeSensor(new ShakeSensor.OnShakeListener() {
             @Override
             public void onShake() {
-                // SHARE
-               // Toast toast = Toast.makeText(getApplicationContext(), "Shake n Bake.", Toast.LENGTH_SHORT);
-               //toast.show();
+
                 finish();
             }
         });
@@ -89,6 +92,20 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 if(imagesPathList !=null){
                     if(imagesPathList.size()>1) {
                         Toast.makeText(MainActivity.this, imagesPathList.size() + " no of images are selected", Toast.LENGTH_SHORT).show();
+                        File sdCard = Environment.getExternalStorageDirectory();
+                        File dir = new File (sdCard.getAbsolutePath() + "/dir1/dir2");
+                        dir.mkdirs();
+                        File file = new File(dir, "GIFName_" + System.currentTimeMillis() +".gif");
+
+                        try{
+                            FileOutputStream f = new FileOutputStream(file);
+                            f.write(generateGIF(list));
+
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+
+
                     }else{
                         Toast.makeText(MainActivity.this, imagesPathList.size() + " no of image are selected", Toast.LENGTH_SHORT).show();
                     }
@@ -117,11 +134,29 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     imageView.setImageBitmap(yourbitmap);
                     imageView.setAdjustViewBounds(true);
                     lnrImages.addView(imageView);
+                    list.add(yourbitmap);
+
                 }
+
+                Log.d("BitMap Length",Integer.toString(list.size()));
             }
         }
 
     }
+    //generate Gif from a array of Bitmaps
+    public static byte[] generateGIF(ArrayList<Bitmap> bitmaps) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        AnimatedGifEncoder encoder = new AnimatedGifEncoder();
+        encoder.start(bos);
+        encoder.setRepeat(0);
+        encoder.setFrameRate(10);
+        for (Bitmap bitmap : bitmaps) {
+            encoder.addFrame(bitmap);
+        }
+        encoder.finish();
+        return bos.toByteArray();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

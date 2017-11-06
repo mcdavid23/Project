@@ -124,7 +124,7 @@ public class CustomPhotoGalleryActivity extends Activity {
     }
 
     //generate Gif from a array of Bitmaps
-    public byte[] generateGIF(ArrayList<Bitmap> bitmaps) {
+    public static byte[] generateGIF(ArrayList<Bitmap> bitmaps) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         AnimatedGifEncoder encoder = new AnimatedGifEncoder();
         encoder.start(bos);
