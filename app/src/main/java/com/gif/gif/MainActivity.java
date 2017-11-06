@@ -1,15 +1,23 @@
 package com.gif.gif;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +32,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 
+
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     ArrayList<Bitmap> list = new ArrayList<Bitmap>();
     private Button btnShare;
     private Intent shareIntent;
@@ -156,6 +166,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         encoder.finish();
         return bos.toByteArray();
     }
+
 
     @Override
     protected void onStart() {
