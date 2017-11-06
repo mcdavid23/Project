@@ -1,5 +1,6 @@
 package com.gif.gif;
-
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +16,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 
+    private Button btnShare;
+    private Intent shareIntent;
+    String shareBody = "Check out this APP!";
     private LinearLayout lnrImages;
     private Button btnAddPhots;
     private Button btnSaveImages;
@@ -27,12 +31,32 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        btnShare = (Button)findViewById(R.id.shareButton);
+        btnShare.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT,"My App");
+                shareIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                startActivity(Intent.createChooser(shareIntent,"Share via "));
+
+
+
+
+
+
+            }
+        });
+
         lnrImages = (LinearLayout)findViewById(R.id.lnrImages);
         btnAddPhots = (Button)findViewById(R.id.btnAddPhots);
         btnSaveImages = (Button)findViewById(R.id.btnSaveImages);
         btnAddPhots.setOnClickListener(this);
         btnSaveImages.setOnClickListener(this);
     }
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

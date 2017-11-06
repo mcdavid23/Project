@@ -7,9 +7,9 @@
     tools:context="com.gif.gif.MainActivity">
 
     <ScrollView
+        android:id="@+id/scroll1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/scroll1"
-        >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/lnrImages"
@@ -38,8 +38,15 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Save"/>
-    </LinearLayout>
 
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="178dp"
+        android:layout_height="wrap_content"
+        android:text="Share"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="48dp" />
+    </LinearLayout>
 
 
 
