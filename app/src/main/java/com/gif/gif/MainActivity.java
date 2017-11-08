@@ -110,6 +110,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                         try{
                             FileOutputStream f = new FileOutputStream(file);
                             f.write(generateGIF(list));
+                            f.close();
+                            list.clear();
 
                         }catch(Exception e){
                             e.printStackTrace();
