@@ -84,6 +84,19 @@
             android:layout_height="50dp"
             android:layout_weight="1" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id = "@+id/framerate"
+            android:ems="10"
+            android:inputType="number"
+            android:hint = "choose frame rate"
+            android:textColorHint="@color/com_facebook_blue"
+            android:textColor="@color/com_facebook_blue"/>
+
+
+
 
     </LinearLayout>
 
