@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Matrix;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.content.Intent;
@@ -150,6 +151,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 for (int i=0;i<imagesPath.length;i++){
                     imagesPathList.add(imagesPath[i]);
                     yourbitmap = BitmapFactory.decodeFile(imagesPath[i]);
+                    yourbitmap = getResizedBitmap(yourbitmap,500,500); //NewMethod
                     ImageView imageView = new ImageView(this);
                     imageView.setImageBitmap(yourbitmap);
                     imageView.setAdjustViewBounds(true);
@@ -175,6 +177,23 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }
         encoder.finish();
         return bos.toByteArray();
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
     }
 
 
