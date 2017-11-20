@@ -21,8 +21,10 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -37,6 +39,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     ArrayList<Bitmap> list = new ArrayList<Bitmap>();
     private Button btnShare;
     private Intent shareIntent;
+    private EditText framerate;
     String shareBody = "Check out this APP!";
     private LinearLayout lnrImages;
     private Button btnAddPhots;
@@ -49,10 +52,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private FileOutputStream outStream = null;
+    public int frame1 = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        framerate = (EditText)findViewById(R.id.framerate);
         btnShare = (Button)findViewById(R.id.shareButton);
         btnShare.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -109,7 +114,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
                         try{
                             FileOutputStream f = new FileOutputStream(file);
-                            f.write(generateGIF(list));
+                            String s = framerate.getText().toString();
+                            frame1 = Integer.parseInt(s);
+                            Toast.makeText(MainActivity.this, "You have choose framerate "+frame1,Toast.LENGTH_SHORT).show();
+                            f.write(generateGIF(list, frame1));
                             f.close();
                             list.clear();
 
@@ -156,12 +164,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     }
     //generate Gif from a array of Bitmaps
-    public static byte[] generateGIF(ArrayList<Bitmap> bitmaps) {
+    public static byte[] generateGIF(ArrayList<Bitmap> bitmaps, int framerate) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         AnimatedGifEncoder encoder = new AnimatedGifEncoder();
         encoder.start(bos);
         encoder.setRepeat(0);
-        encoder.setFrameRate(10);
+        encoder.setFrameRate(framerate);
         for (Bitmap bitmap : bitmaps) {
             encoder.addFrame(bitmap);
         }
