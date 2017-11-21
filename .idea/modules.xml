@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GIF.iml" filepath="$PROJECT_DIR$/GIF.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GIFCreator.iml" filepath="$PROJECT_DIR$/GIFCreator.iml" />
+      <module fileurl="file://C:\Users\Scott\Desktop\GIF\GIFCreator.iml" filepath="C:\Users\Scott\Desktop\GIF\GIFCreator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

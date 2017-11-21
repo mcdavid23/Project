@@ -192,7 +192,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         // "RECREATE" THE NEW BITMAP
         Bitmap resizedBitmap = Bitmap.createBitmap(
                 bm, 0, 0, width, height, matrix, false);
-        bm.recycle();
+        //bm.recycle();
         return resizedBitmap;
     }
 

@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        tools:layout_editor_absoluteY="43dp"
+        tools:layout_editor_absoluteY="160dp"
         tools:layout_editor_absoluteX="0dp">
 
         <View
